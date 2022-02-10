@@ -5,8 +5,7 @@ import axios from 'axios'
 
 const data = ref()
 async function getWeather(){
-  const response = axios.get("https://localhost:7092/WeatherForecast")
-  const res = await response;
+  const response = await axios.get("https://localhost:7092/WeatherForecast")
   data.value = res.data
   return res.json()
 }
