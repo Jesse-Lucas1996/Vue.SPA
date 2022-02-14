@@ -5,14 +5,15 @@ import axios from 'axios'
 
 const data = ref()
 async function getWeather(){
-  const response = await axios.get("https://localhost:7092/WeatherForecast")
+  const response = await axios.get('https://localhost:7092/WeatherForecast', {
+    headers: { 'Content-Type': 'application/json', 'Authorization':`Bearer ${await useAuth0().accessToken()}` }
+  })
   data.value = response.data
 }
 getWeather()
 
 const { login, logout, initAuth } = useAuth0(AuthState);
 initAuth();
-
 </script>
 
 <template>
