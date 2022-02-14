@@ -4,16 +4,19 @@ import {ref} from 'vue'
 import axios from 'axios'
 
 const data = ref()
+
 async function getWeather(){
+  const accessToken = await useAuth0().accessToken()
   const response = await axios.get('https://localhost:7092/WeatherForecast', {
-    headers: { 'Content-Type': 'application/json', 'Authorization':`Bearer ${await useAuth0().accessToken()}` }
+    headers: { 'Content-Type': 'application/json', 'Authorization':`Bearer ${accessToken}` }
   })
   data.value = response.data
 }
-getWeather()
 
 const { login, logout, initAuth } = useAuth0(AuthState);
 initAuth();
+getWeather()
+
 </script>
 
 <template>
@@ -26,6 +29,7 @@ initAuth();
       <p> Welcome to VueAuth <strong>{{ AuthState.user.name }}</strong></p>
       <button @click="logout()" class="btn btn-secondary">Logout</button>
     </div>
+    <button v-if="AuthState.isAuthenticated" @click="getWeather()" class="btn btn-secondary"> WeatherForecast </button>
     <div v-if="AuthState.isAuthenticated">{{data}}</div>
     <router-view></router-view>
   </div>
