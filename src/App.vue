@@ -15,7 +15,6 @@ async function getWeather(){
 
 const { login, logout, initAuth } = useAuth0(AuthState);
 initAuth();
-getWeather()
 
 </script>
 
